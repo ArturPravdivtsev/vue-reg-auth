@@ -101,7 +101,7 @@ class authController {
             const userData = validateRefreshToken(refreshToken)
             const tokenDb = await tokenModel.findOne({ refreshToken })
             if(!userData || !tokenDb) {
-                res.status(403).json({message: 'Unauthorized'})
+                return res.status(403).json({message: 'Unauthorized'})
             }
             const user = await User.findById(userData.id)
             const accessToken = generateAccessToken(user._id)

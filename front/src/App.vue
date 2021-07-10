@@ -1,25 +1,38 @@
 <template>
-  <div id="app">
-    <div v-if="isLoading">Загрузка...</div>
-    <div v-else>
-      <h1 v-if="this.$store.getters.getAuth">
-        Пользователь {{ this.$store.getters.getUser.username }} авторизован
-      </h1>
-      <div v-else>
-        <h1>Авторизуйтесь</h1>
-        <LoginForm />
-      </div>
-    </div>
-  </div>
+  <v-app>
+    <v-app-bar app color="primary" dark>
+      <div class="d-flex align-center"></div>
+    </v-app-bar>
+
+    <v-main>
+      <v-container>
+        <v-row>
+          <Loader v-if="isLoading" />
+          <div v-else>
+            <h1 v-if="this.$store.getters.getAuth">
+              Пользователь
+              {{ this.$store.getters.getUser.username }} авторизован
+            </h1>
+            <div v-else>
+              <h1>Авторизуйтесь</h1>
+              <LoginForm />
+            </div>
+          </div>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 import LoginForm from "./components/LoginForm.vue";
+import Loader from "./components/Loader.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "App",
   components: {
     LoginForm,
+    Loader,
   },
   data() {
     return {
@@ -41,14 +54,3 @@ export default {
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

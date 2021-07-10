@@ -1,9 +1,46 @@
 <template>
   <div>
-    <input v-model="username" type="text" placeholder="Username" />
-    <input v-model="password" type="password" placeholder="Password" />
-    <button @click="onLogin">Вход</button>
-    <button @click="onRegister">Регистрация</button>
+    <v-alert dense outlined type="error" v-if="message">
+      {{ message }}
+    </v-alert>
+    <v-tabs>
+      <v-tab>Войти</v-tab>
+      <v-tab>Зарегистрироваться</v-tab>
+      <v-tab-item>
+        <v-card flat>
+          <v-text-field
+            v-model="username"
+            type="text"
+            label="Username"
+            placeholder="Username"
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            type="password"
+            label="Password"
+            placeholder="Password"
+          ></v-text-field>
+          <v-btn color="accent" @click="onLogin">Вход</v-btn>
+        </v-card>
+      </v-tab-item>
+      <v-tab-item>
+        <v-card flat>
+          <v-text-field
+            v-model="username"
+            type="text"
+            label="Username"
+            placeholder="Username"
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            type="password"
+            label="Password"
+            placeholder="Password"
+          ></v-text-field>
+          <v-btn color="accent" @click="onRegister">Регистрация</v-btn>
+        </v-card>
+      </v-tab-item>
+    </v-tabs>
   </div>
 </template>
 
@@ -15,17 +52,20 @@ export default {
     return {
       username: "",
       password: "",
+      message: "",
     };
   },
   methods: {
     ...mapActions(["login", "registration"]),
-    onLogin() {
+    async onLogin() {
       const { username, password } = this;
-      this.login({ username, password });
+      const message = await this.login({ username, password });
+      this.message = message;
     },
-    onRegister() {
+    async onRegister() {
       const { username, password } = this;
-      this.registration({ username, password} );
+      const message = await this.registration({ username, password });
+      this.message = message;
     },
   },
 };

@@ -26,8 +26,10 @@ export default new Vuex.Store({
         localStorage.setItem('token', response.data.accessToken)
         commit('setAuth', true)
         commit('setUser', response.data.user)
+        this.$router.go()
       } catch(e) {
         console.log(e.response?.data?.message)
+        return e.response?.data?.message
       }
     },
     async registration({ commit }, { username, password }) {
@@ -37,8 +39,10 @@ export default new Vuex.Store({
         localStorage.setItem('token', response.data.accessToken)
         commit('setAuth', true)
         commit('setUser', response.data.user)
+        this.$router.go()
       } catch(e) {
         console.log(e.response?.data?.message)
+        return e.response?.data?.message
       }
     },
     async checkAuth({ commit }) {
